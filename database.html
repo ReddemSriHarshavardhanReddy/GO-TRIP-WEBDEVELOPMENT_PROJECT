@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html>
+   <head>
+    <title>Your Webpage Title Goes Here</title>
+    <style>
+      .fs{
+        width: 30%;
+      }
+      h1{
+        width: 30%;
+        text-align: center;
+      }
+    </style>
+    <script>
+      function save()
+      {
+
+        if(typeof(Storage) === "undefined")
+          alert("No local Storage");
+        else if(window.openDatabase)          
+        {      
+          var db = openDatabase("IT","1.0","IT Employee Database",100000);
+          db.transaction(function(tx)
+          {
+            tx.executeSql("CREATE TABLE EMP(name text,emp_id text,department text,salary text,address text)",[],
+              function(tx)
+              {
+                alert("EMP Table created");
+              });
+          });
+
+          db.transaction(function(tx){
+            var name = document.getElementById('name').value;
+            var emp_id = document.getElementById('emp_id').value;
+            var department = document.getElementById('department').value;
+            var salary = document.getElementById('salary').value;
+            var address = document.getElementById('address').value;
+            tx.executeSql("INSERT INTO EMP(name,emp_id,department,salary,address) values(?,?,?,?,?)",
+            [name,emp_id,department,salary,address],
+              function(tx,result){
+                alert("Record Created");
+              });
+          });
+
+        }  
+        else
+          alert("Unable to open websql database");   
+      }
+    </script>
+  </head>
+  <body>
+    <h1>Registration Form</h1>
+    <div id = "message">
+      
+      <form action="" method='post'>
+        <fieldset class="fs">
+        <label> Name </label><input type='text' name='name' id='name' /> <br><br>
+        <label> Emp_ID </label><input type='text' name='emp_id' id='emp_id' /> <br><br>
+         <label>Department </label><input type='text' name='department' id='department' /> <br><br>
+          <label> Salary </label><input type='text' name='salary' id='salary' /> <br><br>
+           <label>Address </label><input type='text' name='address' id='address' /> <br><br>
+        <input type='button' value='submit' onclick='save()'></input>
+        <input type='reset' value='reset'></input>
+      </fieldset>
+      </form>
+    </div>
+  </body>
+</html>

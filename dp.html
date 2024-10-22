@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html>
+   <head>
+    <style>
+      table {
+        border-collapse: collapse;
+        padding: 10px;
+        
+      }
+      td{
+        text-align: center;
+        padding: 10px;
+      }
+    </style>
+        <script>
+      function showDB()
+      {
+        if(typeof(Storage) == "undefined")
+          alert("No local Storage");
+        else if(window.openDatabase)
+        {          
+          var db = openDatabase("IT","1.0","IT Employee Database",100000);
+                  db.transaction(function(tx){
+            var tid = document.getElementById('dbtable');
+           
+            tx.executeSql("SELECT * FROM EMP",[],
+              function(tx,rs){
+                for(var i = 0; i < rs.rows.length; i++)
+                {
+                  item = rs.rows.item(i);
+                  var name = item['name'];
+                  var age= item['age'];
+                  var gender= item['gender'];
+                  var place_to_visit= item['place_to_visit'];
+                  var native_address= item['native_address'];
+                  tid.innerHTML += "<tr><td>"+name+"</td><td>"+emp_id+"</td><td>"+department+"</td><td>"+salary+"</td><td>"+address+"</td></tr>";
+                }
+              });
+          });
+        }
+        else
+          alert("Unable to open websql database");
+        }  
+          
+    </script>
+  </head>
+  <body onload='showDB()'>
+    <h2>Table Data</h2>
+    <table id='dbtable' border="2">
+      <tr>
+          <th>Name</th>
+		      <th>Age</th>
+		      <th>Gender </th>
+          <th>place to visit </th>
+          <th>Native Address</th>
+        </th>
+      </tr>  
+    </table>
+      </body>
+</html>

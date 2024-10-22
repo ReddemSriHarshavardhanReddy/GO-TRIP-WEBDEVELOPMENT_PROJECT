@@ -1,0 +1,25 @@
+<script>
+  function calculateTotalPrice() {
+    const personsSelect = document.getElementById('persons');
+    const totalAmountDiv = document.getElementById('total-amount');
+    const baseAmount = 150000;  // Base amount
+
+    // Get the selected number of persons
+    const selectedPersons = parseInt(personsSelect.value, 10);
+
+    // Calculate the total amount
+    const totalPrice = baseAmount * selectedPersons;
+
+    // Update the total amount display
+    totalAmountDiv.textContent = 'Total Amount: RS.' + totalPrice + '/-';
+  }
+
+  function showSuccessMessage() {
+    const successMessage = document.getElementById('success-message');
+    successMessage.style.display = 'block';
+  }
+
+  // Call the calculateTotalPrice function whenever the "Number of Persons" selection changes
+  const personsSelect = document.getElementById('persons');
+  personsSelect.addEventListener('change', calculateTotalPrice);
+</script>
